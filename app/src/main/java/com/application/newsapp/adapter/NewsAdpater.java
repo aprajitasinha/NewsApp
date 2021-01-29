@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import com.application.newsapp.R;
 import com.application.newsapp.api.response.ArticleResponse;
 import com.application.newsapp.databinding.ItemNewsBinding;
+import com.application.newsapp.interfaces.ClickListner;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -20,10 +21,12 @@ import androidx.recyclerview.widget.RecyclerView;
 public class NewsAdpater extends RecyclerView.Adapter<NewsAdpater.ViewHolder> {
     private List<ArticleResponse> list;
     Context context;
+    ClickListner clickListner;
     int pos=-1;
-    public NewsAdpater(List<ArticleResponse> list, Context context) {
+    public NewsAdpater(List<ArticleResponse> list, Context context, ClickListner clickListner) {
         this.list = list;
         this.context=context;
+        this.clickListner=clickListner;
     }
 
     @NonNull
@@ -46,11 +49,12 @@ public class NewsAdpater extends RecyclerView.Adapter<NewsAdpater.ViewHolder> {
 
                             @Override
                             public void onSuccess() {
-                                //   holder.progress.setVisibility(View.GONE);
+                                   holder.binding.pb.setVisibility(View.GONE);
                             }
 
                             @Override
                             public void onError() {
+                                holder.binding.pb.setVisibility(View.GONE);
 
                             }
                         }
@@ -61,6 +65,12 @@ public class NewsAdpater extends RecyclerView.Adapter<NewsAdpater.ViewHolder> {
 //        else{
 //            holder.binding.llCard.setBackground(context.getResources().getDrawable(R.drawable.backgroundd_card));
 //        }
+        holder.binding.llMain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clickListner.OnClick(planModel,position,v);
+            }
+        });
 
 
 
