@@ -93,13 +93,13 @@ ActivityMainBinding binding;
                         Log.e(TAG, "log: --");
                         if (response.isSuccessful()) {
                             try {
+                                binding.vid.setVisibility(View.VISIBLE);
                                 if (response.raw().networkResponse() != null) {
-                                    showloader();
                                     if (response.body().getStatus().equalsIgnoreCase("ok")) {
-                                        hideloader();
+                                        binding.vid.setVisibility(View.GONE);
                                         setRecyclerView(response.body().getArticles());
                                     } else {
-                                        hideloader();
+                                        binding.vid.setVisibility(View.GONE);
                                     }
                                     Log.d(TAG, "onResponse: response is from NETWORK...");
                                 }
@@ -108,6 +108,8 @@ ActivityMainBinding binding;
                                         && response.raw().networkResponse() == null) {
                                     if (response.body().getStatus().equalsIgnoreCase("ok")) {
                                         setRecyclerView(response.body().getArticles());
+                                        binding.vid.setVisibility(View.GONE);
+
                                         Log.d(TAG, "onResponse: response is ...");
                                     }
                                     Log.d(TAG, "onResponse: response is from CACHE...");
@@ -127,7 +129,8 @@ ActivityMainBinding binding;
                     @Override
                     public void onFailure(Call<TopHeadlineResponse> call, Throwable t) {
                         Log.e(TAG, "onFailure: ", t);
-                          hideloader();
+                        binding.vid.setVisibility(View.GONE);
+
                         snack_for_failed();
 
                     }
@@ -151,21 +154,5 @@ ActivityMainBinding binding;
     }
 
 
-    public void showloader() {
-        dialog_progress = new Dialog(this);
-        dialog_progress.setContentView(R.layout.dialog_prog);
-        dialog_progress.getWindow().setBackgroundDrawableResource(R.drawable.back);
-        dialog_progress.setCancelable(false);
-        dialog_progress.show();
-    }
-    public void hideloader() {
-        new Handler().postDelayed(
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        dialog_progress.hide();
-                    }
-                }, 700);
-    }
 
 }

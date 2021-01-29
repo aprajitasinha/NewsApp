@@ -27,13 +27,13 @@
                 android:orientation="horizontal">
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardview1"
-                    android:layout_width="@dimen/_60sdp"
+                    android:layout_width="match_parent"
                     android:backgroundTint="#fff"
-                    android:layout_height="@dimen/_60sdp"
+                    android:layout_height="wrap_content"
                     >
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/image"
-                    android:layout_width="@dimen/_60sdp"
+                    android:layout_width="match_parent"
                     android:layout_height="@dimen/_60sdp" />
                 <ProgressBar
                     android:id="@+id/pb"
